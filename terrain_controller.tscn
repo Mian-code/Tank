@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0kvk6xauju4v"]
+
+[ext_resource type="Script" uid="uid://25gvqs8i4b8v" path="res://terrain_controller.gd" id="1_g2k0x"]
+
+[node name="TerrainController" type="Node3D"]
+script = ExtResource("1_g2k0x")
+num_terrain_blocks = 3

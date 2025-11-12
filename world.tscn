@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://djf374h4yrp5u"]
+
+[ext_resource type="Script" uid="uid://bossepj8y1g2a" path="res://player.gd" id="1_fj7yv"]
+[ext_resource type="Texture2D" uid="uid://1h7sg4jd2kcv" path="res://icon.svg" id="2_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://tbcaf0x42vy2" path="res://terrain_blocks/terrain_0.tscn" id="3_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://c0kvk6xauju4v" path="res://terrain_controller.tscn" id="4_036b0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gv5m4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_f3sb7"]
+sky_material = SubResource("ProceduralSkyMaterial_gv5m4")
+
+[sub_resource type="Environment" id="Environment_fj7yv"]
+background_mode = 2
+sky = SubResource("Sky_f3sb7")
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aqk2v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_036b0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwbse"]
+albedo_texture = ExtResource("2_tlwt5")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_036b0"]
+size = Vector3(0.9091797, 3.9164429, 0.54052734)
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fj7yv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1.115, 0, 0, 0, 0.25, 0, 0, 0, 1.83, 0.295, 0.135, 1.3407564)
+script = ExtResource("1_fj7yv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999964, 1.2092475, 1.045218, 0)
+shape = SubResource("BoxShape3D_aqk2v")
+disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("BoxMesh_036b0")
+surface_material_override/0 = SubResource("StandardMaterial3D_dwbse")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(0.89686096, 0, 0, 0, 3.712068, 1.4901515, 0, -0.2035726, 0.5071131, 0, 4.922421, 0.3788673)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1.1149999, 0, 0, 0, 0.25, 0, 0, 0, 1.8299997, 0.0027983785, 0.009183645, 0.002343446)
+shape = SubResource("BoxShape3D_036b0")
+
+[node name="Terrain_0" parent="." instance=ExtResource("3_aqk2v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.568358)
+
+[node name="TerrainController" parent="." instance=ExtResource("4_036b0")]
